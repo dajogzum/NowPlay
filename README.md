@@ -12,4 +12,12 @@ git pull
 ```
 
 ## Config
-`ipyamaha: IP_DEVICE`
+```
+{
+  module: "nowplay",
+  position: "bottom_left",
+  config:{
+    ipyamaha: "DEVICE_IP"
+  }
+},
+```
