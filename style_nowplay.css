@@ -1,0 +1,15 @@
+.nowplay {
+font-size: 23px;
+width: 400px;
+line-height: 37px;
+}
+
+.nowplay > img {
+height: 250px;
+width: 250px;
+}
+
+
+.title-now {
+font-size: 28px;
+}
