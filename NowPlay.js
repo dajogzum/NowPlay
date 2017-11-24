@@ -1,4 +1,4 @@
-Module.register("nowplay",{
+Module.register("NowPlay",{
 
 	defaults: {
 		ipyamaha: "192.168.0.10"
@@ -63,11 +63,11 @@ Module.register("nowplay",{
 								if(input != "net_radio" && artidNew != artidOld){
 									artidOld = artidNew;
 									self.updateDom(1000);
-									Log.log("REFRESHING DOM");
+									Log.log("REFRESHING DOM NowPlay");
 								}else if(input == "net_radio" && titleNew != titleOld){
 									titleOld = titleNew;
 									self.updateDom(1000);
-									Log.log("REFRESHING DOM");
+									Log.log("REFRESHING DOM NowPlay");
 								};
 						} else if(playback == "play" && kontrolka == 0 && input != "mc_link") {
 							kontrolka = 1;
