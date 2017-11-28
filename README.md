@@ -14,6 +14,7 @@ git pull
 ```
 cd ../modules/NowPlay
 git reset --hard
+git clean -df
 git pull
 ```
 ## Config
