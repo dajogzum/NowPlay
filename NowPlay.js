@@ -30,7 +30,7 @@ Module.register("NowPlay",{
 				var who = document.createElement("div");
 				var poster = document.createElement("img");
 				poster.setAttribute("src", image);
-				who.innerHTML = "<img hight='20px' width='auto' style='filter: invert(100%); margin-right:3px;' src='modules/NowPlay/icons/artist.png'><span class='artist-now'>"+artist+"</span></br><img hight='20px' width='auto' style='filter: invert(100%); margin-right:3px;' src='modules/NowPlay/icons/track.png'><span class='title-now'>"+title+"</span>";
+				who.innerHTML = "<img height='20px' width='auto' style='filter: invert(100%); margin-right:5px;' src='modules/NowPlay/icons/artist.png'><span class='artist-now'>"+artist+"</span></br><img height='20px' width='auto' style='filter: invert(100%); margin-right:5px;' src='modules/NowPlay/icons/track.png'><span class='title-now'>"+title+"</span>";
 				wrapper.appendChild(who);
 				wrapper.appendChild(poster);
 			}
