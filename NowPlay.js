@@ -21,17 +21,38 @@ Module.register("NowPlay",{
 		var xhttp = new XMLHttpRequest();
 		xhttp.open("GET", link, true);
 		xhttp.send();
-		xhttp.onreadystatechange = function(artist, title, image) {
+		xhttp.onreadystatechange = function() {
 			if(xhttp.readyState == 4){
 				var data = JSON.parse(this.response);
 				artist = data.artist;
 				title = data.track;
+				//ikona wykonawcy
+				var icon = document.createElement("img");
+				icon.setAttribute("src", "modules/NowPlay/icons/artist.png");
+				icon.className = "icon-nowplay";
+				wrapper.appendChild(icon);
+				//artysta
+				var text = document.createElement("p");
+				var node = document.createTextNode(artist);
+				text.appendChild(node);
+				text.className = "artist-nowplay";
+				wrapper.appendChild(text);
+				//ikona utworu
+				var icon = document.createElement("img");
+				icon.setAttribute("src", "modules/NowPlay/icons/track.png");
+				icon.className = "icon-nowplay";
+				wrapper.appendChild(icon);
+				//tytul utworu
+				text = document.createElement("p");
+				node = document.createTextNode(title);
+				text.appendChild(node);
+				text.className = "title-nowplay";
+				wrapper.appendChild(text);
+				//okladka
 				image = "http://"+self.config.ipyamaha+""+data.albumart_url;
-				var who = document.createElement("div");
 				var poster = document.createElement("img");
 				poster.setAttribute("src", image);
-				who.innerHTML = "<img height='20px' width='auto' style='filter: invert(100%); margin-right:5px;' src='modules/NowPlay/icons/artist.png'><span class='artist-now'>"+artist+"</span></br><img height='20px' width='auto' style='filter: invert(100%); margin-right:5px;' src='modules/NowPlay/icons/track.png'><span class='title-now'>"+title+"</span>";
-				wrapper.appendChild(who);
+				poster.className = "poster-nowplay";
 				wrapper.appendChild(poster);
 			}
 		}
@@ -45,48 +66,56 @@ Module.register("NowPlay",{
 		var self = this;
 		var artidOld;
 		var titleOld;
-		var kontrolka = 1;
-
+		var visible = true;
 			setInterval(function () {
         			var xhttp = new XMLHttpRequest();
 				xhttp.open("GET", link, true);
 				xhttp.send();
-				xhttp.onreadystatechange = function(artist, title, image) {
+				xhttp.onreadystatechange = function() {
 					if(xhttp.readyState == 4){
-					var data = JSON.parse(this.response);
-					var artidNew = data.albumart_id;
-					var titleNew = data.track;
-					var playback = data.playback;
-					var input = data.input;
-						if(playback == "play" && kontrolka == 1 && input != "mc_link"){
-							kontrolka = 1;
-								if(input != "net_radio" && artidNew != artidOld){
+						var data = JSON.parse(this.response);
+						var artidNew = data.albumart_id;
+						var titleNew = data.track;
+						var playback = data.playback;
+						var input = data.input;
+						if (playback=="play") {
+							if (!visible) {
+								self.show(1000);
+								visible = true;
+							}
+							switch(input){
+								case "spotify":
+								if (artidNew!=artidOld && titleNew!=titleOld) {
 									artidOld = artidNew;
-									self.updateDom(1000);
-									Log.log("REFRESHING DOM NowPlay");
-								}else if(input == "net_radio" && titleNew != titleOld){
 									titleOld = titleNew;
 									self.updateDom(1000);
-									Log.log("REFRESHING DOM NowPlay");
-								};
-						} else if(playback == "play" && kontrolka == 0 && input != "mc_link") {
-							kontrolka = 1;
-							self.show(1000);
-							self.updateDom();
-							titleOld = titleNew;
-							artidOld = artidNew;
-						} else if(playback != "play" && kontrolka == 0) {
-							kontrolka = 0;
-						} else if(playback != "play" && kontrolka == 1) {
-							kontrolka = 0;
-							self.hide(1000);
-						} else if(input == "mc_link"){
-							self.hide(1000);
-						};
+									Log.log("Spotify NowPlay")
+								}
+								break;
 
-					};
+								case "net_radio":
+								if (titleNew!=titleOld) {
+									titleOld = titleNew;
+									self.updateDom(1000);
+									Log.log("NetRadio NowPlay")
+								}
+								break;
 
+								case "mc_link":
+								if (visible) {
+									self.hide(1000);
+									visible = false;
+								}
+								break;
+							}
+						}else{
+							if (visible) {
+								self.hide(1000);
+								visible = false;
+							}
+						}
 					};
+				};
 			}, 2000);
 		},
 });
