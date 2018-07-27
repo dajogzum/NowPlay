@@ -26,28 +26,32 @@ Module.register("NowPlay",{
 				var data = JSON.parse(this.response);
 				artist = data.artist;
 				title = data.track;
-				//ikona wykonawcy
-				var icon = document.createElement("img");
-				icon.setAttribute("src", "modules/NowPlay/icons/artist.png");
-				icon.className = "icon-nowplay";
-				wrapper.appendChild(icon);
-				//artysta
-				var text = document.createElement("p");
-				var node = document.createTextNode(artist);
-				text.appendChild(node);
-				text.className = "artist-nowplay";
-				wrapper.appendChild(text);
-				//ikona utworu
-				var icon = document.createElement("img");
-				icon.setAttribute("src", "modules/NowPlay/icons/track.png");
-				icon.className = "icon-nowplay";
-				wrapper.appendChild(icon);
-				//tytul utworu
-				text = document.createElement("p");
-				node = document.createTextNode(title);
-				text.appendChild(node);
-				text.className = "title-nowplay";
-				wrapper.appendChild(text);
+				if (artist!="") {
+					//ikona wykonawcy
+					var icon = document.createElement("img");
+					icon.setAttribute("src", "modules/NowPlay/icons/artist.png");
+					icon.className = "icon-nowplay";
+					wrapper.appendChild(icon);
+					//artysta
+					var text = document.createElement("p");
+					var node = document.createTextNode(artist);
+					text.appendChild(node);
+					text.className = "artist-nowplay";
+					wrapper.appendChild(text);
+				}
+				if (title!="") {
+					//ikona utworu
+					var icon = document.createElement("img");
+					icon.setAttribute("src", "modules/NowPlay/icons/track.png");
+					icon.className = "icon-nowplay";
+					wrapper.appendChild(icon);
+					//tytul utworu
+					text = document.createElement("p");
+					node = document.createTextNode(title);
+					text.appendChild(node);
+					text.className = "title-nowplay";
+					wrapper.appendChild(text);
+				}
 				//okladka
 				image = "http://"+self.config.ipyamaha+""+data.albumart_url;
 				var poster = document.createElement("img");
@@ -83,30 +87,18 @@ Module.register("NowPlay",{
 								self.show(1000);
 								visible = true;
 							}
-							switch(input){
-								case "spotify":
-								if (artidNew!=artidOld && titleNew!=titleOld) {
+							if (input!="mc_link") {
+								if (artidNew!=artidOld && data.albumart_url!="") {
 									artidOld = artidNew;
 									titleOld = titleNew;
 									self.updateDom(1000);
-									Log.log("Spotify NowPlay")
+									Log.log("Updated NowPlay")
 								}
-								break;
-
-								case "net_radio":
-								if (titleNew!=titleOld) {
-									titleOld = titleNew;
-									self.updateDom(1000);
-									Log.log("NetRadio NowPlay")
-								}
-								break;
-
-								case "mc_link":
+							}else{
 								if (visible) {
 									self.hide(1000);
 									visible = false;
 								}
-								break;
 							}
 						}else{
 							if (visible) {
