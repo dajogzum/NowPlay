@@ -7,6 +7,7 @@
 .nowplay > .poster-nowplay {
 	height: 250px;
 	width: 250px;
+	background-color: black;
 }
 
 .nowplay > .icon-nowplay {
