@@ -53,7 +53,7 @@ Module.register("NowPlay",{
 					wrapper.appendChild(text);
 				}
 				//okladka
-				if(data.albumart_url=="" || self.config.ipyamaha == "undefined"){
+				if(data.albumart_url=="" || self.config.ipyamaha = undefined){
 					var poster = document.createElement("div");
 				}else{
 					image = "http://"+self.config.ipyamaha+""+data.albumart_url;
