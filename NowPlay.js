@@ -53,12 +53,12 @@ Module.register("NowPlay",{
 					wrapper.appendChild(text);
 				}
 				//okladka
-				if(data.albumart_url!="" || self.config.ipyamaha != "undefined"){
+				if(data.albumart_url=="" || self.config.ipyamaha == "undefined"){
+					var poster = document.createElement("div");
+				}else{
 					image = "http://"+self.config.ipyamaha+""+data.albumart_url;
 					var poster = document.createElement("img");
 					poster.setAttribute("src", image);
-				}else{
-					var poster = document.createElement("div");
 				}
 				poster.className = "poster-nowplay";
 				wrapper.appendChild(poster);
